@@ -14,6 +14,10 @@ let calc = new  Calculator;
 const outputDisplay = document.querySelector('#output p')
 const numberButtons = document.querySelectorAll('.number');
 const clearButton = document.querySelector('#clear');
+const pctButton = document.querySelector('#pct');
+const divideButton = document.querySelector('#divide');
+const multiplyButton = document.querySelector('#multiply');
+const subtractButton = document.querySelector('#subtract');
 const addButton = document.querySelector('#add');
 const equalsButton = document.querySelector('#equals');
 
@@ -30,6 +34,41 @@ clearButton.addEventListener('click', () =>{
     outputDisplay.textContent = calc.display;
 });
 
+divideButton.addEventListener('click', () => {
+    calc.opLastPressed = true;
+    if(calc.total === 0){
+        calc.total = calc.getDisplayNum();
+        calc.operation = 'divide';
+    }
+    else {
+        divideNumbers();
+    }
+});
+
+multiplyButton.addEventListener('click', () => {
+    calc.opLastPressed = true;
+    if(calc.total === 0){
+        calc.total = calc.getDisplayNum();
+        calc.operation = 'divide';
+    }
+    else {
+        multiplyNumbers();
+    }
+});
+
+subtractButton.addEventListener('click', () => {
+    calc.opLastPressed = true;
+    if(calc.total === 0){
+        calc.total = calc.getDisplayNum();
+        calc.operation = 'minus';
+    }
+    else {
+        subtractNumbers();
+    }
+});
+
+
+
 addButton.addEventListener('click', () => {
     calc.opLastPressed = true;
     if(calc.total === 0){
@@ -44,13 +83,14 @@ addButton.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
     calc.opLastPressed = true;
     switch(calc.operation) {
-        case 'mod':
-            break;
         case 'divide':
+            divideNumbers();
             break;
         case 'multiply':
+            multiplyNumbers();
             break;
-        case 'subtract':
+        case 'minus':
+            subtractNumbers();
             break;
         case 'add':
             addNumbers();
@@ -61,6 +101,21 @@ equalsButton.addEventListener('click', () => {
 function changeDisplay(){
     calc.display = calc.total;
     outputDisplay.textContent = calc.display;
+}
+
+function divideNumbers(){
+    calc.total /= calc.getDisplayNum();
+    changeDisplay();
+}
+
+function multiplyNumbers(){
+    calc.total *= calc.getDisplayNum();
+    changeDisplay();
+}
+
+function subtractNumbers(){
+    calc.total -= calc.getDisplayNum();
+    changeDisplay();
 }
 
 function addNumbers(){
